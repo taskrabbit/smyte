@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://key:secret@api.smyte.com/v2/action/classify
+    body:
+      encoding: UTF-8
+      string: '{"data":{"custom_id":1},"http_request":{"headers":{"X-Real-IP":"5.6.7.8"},"path":"/login"},"session":{"id":"sessionguid","action":{"user_id":2}},"timestamp":"2015-01-22T09:14:12-08:00","name":"my_event"}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.6.2 (Ubuntu)
+      Date:
+      - Sat, 16 Apr 2016 04:14:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Smyte-Server:
+      - classify-f9a7726-toyfk
+      X-Smyte-Trace:
+      - ZoHCoiXTNHHh
+      Cache-Control:
+      - no-cache
+      Vary:
+      - accept-encoding
+    body:
+      encoding: UTF-8
+      string: '{"statusCode":200,"completed":true,"message":"Action is good.","verdict":"ALLOW","labels":{}}'
+    http_version: 
+  recorded_at: Sat, 16 Apr 2016 04:14:27 GMT
+recorded_with: VCR 2.8.0
