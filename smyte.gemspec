@@ -11,9 +11,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Talk to Smyte service}
   spec.description   = %q{Smyte does fraud detection}
-  spec.homepage      = "https://www.taskrabbit.co,"
+  spec.homepage      = "https://www.taskrabbit.com"
   spec.license       = "MIT"
-  
+
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
