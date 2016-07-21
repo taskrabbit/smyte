@@ -1,16 +1,17 @@
 module Smyte
   class Notification
-    def self.parse(webhook_secret, response)
+    def self.parse(webhook_secret, response, options = {})
       if webhook_secret != Smyte.webhook_secret
         raise "invalid webhook_secret: #{webhook_secret}"
       end
-      Smyte::Notification.new(response)
+      Smyte::Notification.new(response, options)
     end
 
-    attr_reader :response
+    attr_reader :response, :options
 
-    def initialize(response)
+    def initialize(response, options = {})
       @response = response
+      @options = options || {}
     end
 
     def items
@@ -25,6 +26,10 @@ module Smyte
       items.each do |hash|
         key = hash["item"]
         next unless key
+        name = hash['labelName']
+        next unless name
+        next unless ::Smyte::Util.label_interesting?(name, options)
+
         if out[key]
           out[key].send(:add_response, hash)
         else

@@ -8,6 +8,7 @@ module Smyte
   autoload :Config,         'smyte/config'
   autoload :LabelReporter,  'smyte/label_reporter'
   autoload :Notification,   'smyte/notification'
+  autoload :Util,           'smyte/util'
 
   class << self
     extend Forwardable
@@ -21,8 +22,8 @@ module Smyte
     def_delegators :client, :action, :classify
 
 
-    def webhook(secret, response)
-      ::Smyte::Notification.parse(secret, response)
+    def webhook(secret, response, options={})
+      ::Smyte::Notification.parse(secret, response, options)
     end
 
     protected
