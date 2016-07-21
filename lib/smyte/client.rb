@@ -25,11 +25,11 @@ module Smyte
       true # any success is just true - nothing else to know
     end
 
-    def classify(event_name, payload)
+    def classify(event_name, payload, options={})
       return Smyte::Classification.allowed if !enabled
 
       response = process(event_name, payload, "/v2/action/classify")
-      Smyte::Classification.new(response)
+      Smyte::Classification.new(response, options)
     end
 
     protected

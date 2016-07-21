@@ -60,6 +60,30 @@ describe 'notification' do
 
       hash[:block].first.name.should == "bad_user"
     end
+
+    it "should filter by label" do
+      notification = Smyte::Notification.new(response, {labels: ['bad_user']})
+      objects = notification.items
+      objects.size.should == 2
+      
+      obj = objects.first
+      obj.key.should == 'user/1234'
+      obj.label_report.should == ["bad_user"]
+
+      obj = objects.last
+      obj.key.should == 'user/6789'
+      obj.label_report.should == ["bad_user"]
+    end
+
+    it "should filter by regex" do
+      notification = Smyte::Notification.new(response, {labels: [/^review/]})
+      objects = notification.items
+      objects.size.should == 1
+      
+      obj = objects.first
+      obj.key.should == 'user/1234'
+      obj.label_report.should == ["exp:review_user"]
+    end
   end
 
   context "pending response" do

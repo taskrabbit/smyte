@@ -6,10 +6,11 @@ module Smyte
       new('verdict' => "ALLOW", 'labels' => {})
     end
 
-    attr_reader :response
+    attr_reader :response, :options
 
-    def initialize(response)
+    def initialize(response, options={})
       @response = response
+      @options  = options || {}
     end
 
     protected
@@ -18,6 +19,7 @@ module Smyte
       out = []
       labels = response["labels"] || {}
       labels.each do |name, attributes|
+        next unless ::Smyte::Util.label_interesting?(name, options)
         out << Smyte::Classification::Label.new(name, attributes)
       end
       out

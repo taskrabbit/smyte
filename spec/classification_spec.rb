@@ -25,6 +25,33 @@ describe 'classification' do
     it "should give label names to report" do
       classification.label_report.should == ["exp:high_fail_rate_payment", "cc_country_mismatch"]
     end
+
+    it "should filter the response to a partial exp label" do
+      classification = Smyte::Classification.new(response, {labels: ["high_fail_rate_payment"]})
+      classification.action.should == :review
+      classification.label_report.should == ["exp:high_fail_rate_payment"]
+      hash = classification.label_actions
+      hash[:block].size.should == 0
+      hash[:review].size.should == 1
+    end
+
+    it "should filter the response to a full exp label" do
+      classification = Smyte::Classification.new(response, {labels: ["exp:high_fail_rate_payment"]})
+      classification.action.should == :review
+      classification.label_report.should == ["exp:high_fail_rate_payment"]
+      hash = classification.label_actions
+      hash[:block].size.should == 0
+      hash[:review].size.should == 1
+    end
+
+    it "should filter responses based on a regex" do
+      classification = Smyte::Classification.new(response, {labels: [/something/,/mis/,"else"]})
+      classification.action.should == :block
+      classification.label_report.should == ["cc_country_mismatch"]
+      hash = classification.label_actions
+      hash[:block].size.should == 1
+      hash[:review].size.should == 0
+    end
   end
 
   context "review response" do
