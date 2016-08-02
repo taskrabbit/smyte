@@ -46,14 +46,12 @@ module Smyte
     protected
 
     def calculate_action
-      return :allow if respond_to?(:parse_allow?, true) && parse_allow?
-
       if label_actions[:block].size > 0
         return :block
       elsif label_actions[:review].size > 0
         return :review
       else
-        return :unknown
+        return :allow
       end
     end
   end

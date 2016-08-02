@@ -25,10 +25,6 @@ module Smyte
       out
     end
 
-    def parse_allow?
-      response["verdict"] == "ALLOW"
-    end
-
     class Label
       attr_reader :name, :response
       def initialize(name, response)
